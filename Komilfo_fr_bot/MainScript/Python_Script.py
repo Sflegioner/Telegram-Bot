@@ -1,6 +1,6 @@
 API_Token = '6470853060:AAEZidQy_4m2qWDwQ7ZtUCF7nxZQ7TvX8d8' #token
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters  
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler
 import Words as W
 import time
 
@@ -25,7 +25,8 @@ if __name__ == '__main__':
     start_handler = CommandHandler('start',start)
     help_handler = CommandHandler('help',help)
     random_handler = CommandHandler('random',random)
-    reminder_handler = CommandHandler('reminder',reminder)
+    reminder_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, reminder)
+    reminder_handler = CommandHandler('reminder', reminder)
     
 
     application.add_handler(start_handler)
