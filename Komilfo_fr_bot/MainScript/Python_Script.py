@@ -12,11 +12,11 @@ async def help(update,context):
     await context.bot.send_message(chat_id=update.effective_chat.id, text="List of commands:\n1)/start\n2)/help\n3)/random\n4)/reminder")
 async def random(update,context):
     await context.bot.send_message(chat_id=update.effective_chat.id, text=W.listW)
-async def reminder(update,context):
-    await context.bot.send_message(chat_id=update.effective_chat.id,text = "send time in minuts")
-    user = update.message.from_user
-    message = update.message.text
-    await context.bot.send_message(chat_id=update.effective_chat.id,text = user)
+async def reply(update,context):
+    await context.bot.send_message(chat_id=update.effective_chat.id,text="Send time to wait")
+    reply_text = update.message.text
+    sender = update.message.from_user
+    await update.message.reply_text(f"your time:{reply_text}")
     
 
 if __name__ == '__main__':
@@ -25,13 +25,13 @@ if __name__ == '__main__':
     start_handler = CommandHandler('start',start)
     help_handler = CommandHandler('help',help)
     random_handler = CommandHandler('random',random)
-    reminder_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, reminder)
-    reminder_handler = CommandHandler('reminder', reminder)
+    reply_handler = CommandHandler('reply',reply)
+    reply_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, reply)
     
-
+    
     application.add_handler(start_handler)
     application.add_handler(help_handler)
     application.add_handler(random_handler)
-    application.add_handler(reminder_handler)
-
+    application.add_handler(reply_handler)
+    
     application.run_polling()
